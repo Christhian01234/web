@@ -98,22 +98,38 @@ document.addEventListener('DOMContentLoaded', function () {
     // Contact Form AJAX (Formspree)
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const statusEl = document.getElementById('formStatus');
+            statusEl.textContent = 'Sending...';
+
+            // Check if reCAPTCHA is completed
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                statusEl.textContent = 'Please complete the reCAPTCHA.';
+                return;
+            }
+
             const formData = new FormData(contactForm);
-            fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
+            formData.append('g-recaptcha-response', recaptchaResponse); // Append reCAPTCHA token
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
                 if (response.ok) {
-                    contactForm.innerHTML = '<div class="thank-you-message" style="color:var(--accent);font-size:1.2rem;text-align:center;padding:2rem 0;">Thank you for your message! I\'ll get back to you soon.</div>';
+                    statusEl.textContent = 'Thanks! Your message was sent.';
+                    contactForm.reset();
+                    if (window.grecaptcha) grecaptcha.reset();
                 } else {
-                    contactForm.innerHTML = '<div class="thank-you-message" style="color:red;font-size:1.2rem;text-align:center;padding:2rem 0;">Oops! Something went wrong. Please try again later.</div>';
+                    statusEl.textContent = 'Oops! There was a problem sending your message.';
                 }
-            }).catch(() => {
-                contactForm.innerHTML = '<div class="thank-you-message" style="color:red;font-size:1.2rem;text-align:center;padding:2rem 0;">Oops! Something went wrong. Please try again later.</div>';
-            });
+            } catch (err) {
+                statusEl.textContent = 'Network error. Please try again.';
+            }
         });
     }
 
