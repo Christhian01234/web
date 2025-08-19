@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
             const formData = new FormData(contactForm);
+            formData.append('g-recaptcha-response', recaptchaResponse); // Append reCAPTCHA token
             try {
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
@@ -163,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
 
 
 
