@@ -247,13 +247,13 @@ header::before {
   margin-bottom: 2rem;
   font-weight: 400;
   color: var(--accent);
-  display: inline-block;
-  overflow: hidden;
-  border-right: 0.15em solid var(--accent);
-  white-space: nowrap;
+  display: block;
+  overflow: visible;
+  border-right: none; /* optional: remove caret if wrapping */
+  white-space: normal;
   margin: 0 auto;
   letter-spacing: 0.15em;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  animation: none; /* optional: disable typing animation if wrapping */
 }
 
 @keyframes typing { from { width: 0 } to { width: 100% } }
