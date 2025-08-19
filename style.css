@@ -882,8 +882,8 @@ footer p {
     .projects-grid,
     .certifications-grid,
     .skills-container {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        grid-template-columns: 1fr; !important;
+        overflow-x: hidden;
     }
     nav .container {
         flex-direction: row;
