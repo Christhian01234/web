@@ -97,41 +97,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Contact Form AJAX (Formspree)
     const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const statusEl = document.getElementById('formStatus');
-            statusEl.textContent = 'Sending...';
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const statusEl = document.getElementById('formStatus');
+        statusEl.textContent = 'Sending...';
 
-            // Check if reCAPTCHA is completed
-            const recaptchaResponse = grecaptcha.getResponse();
-            if (!recaptchaResponse) {
-                statusEl.textContent = 'Please complete the reCAPTCHA.';
-                return;
+        // ✅ Check reCAPTCHA
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) {
+            statusEl.textContent = 'Please complete the reCAPTCHA.';
+            return;
+        }
+
+        const formData = new FormData(contactForm);
+        formData.append('g-recaptcha-response', recaptchaResponse);
+
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                statusEl.textContent = 'Thanks! Your message was sent.';
+                contactForm.reset();
+                grecaptcha.reset(); // ✅ Reset reCAPTCHA after success
+            } else {
+                statusEl.textContent = 'Oops! There was a problem sending your message.';
             }
-
-            const formData = new FormData(contactForm);
-            formData.append('g-recaptcha-response', recaptchaResponse); // Append reCAPTCHA token
-
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    statusEl.textContent = 'Thanks! Your message was sent.';
-                    contactForm.reset();
-                    if (window.grecaptcha) grecaptcha.reset();
-                } else {
-                    statusEl.textContent = 'Oops! There was a problem sending your message.';
-                }
-            } catch (err) {
-                statusEl.textContent = 'Network error. Please try again.';
-            }
-        });
-    }
+        } catch (err) {
+            statusEl.textContent = 'Network error. Please try again.';
+            console.error('Form submission error:', err);
+        }
+    });
+}
 
     // Experience Image Zoom/Fullscreen
     const experienceImage = document.querySelector('.experience-image');
@@ -166,3 +167,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
