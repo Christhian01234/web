@@ -842,18 +842,3 @@ footer p {
   align-items: center;
   justify-content: flex-start;
 }
-
-/* Experience image wrapper */
-.experience-image-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1.5rem 0;
-  background: linear-gradient(135deg, rgba(100,255,218,0.10) 0%, rgba(10,25,47,0.10) 100%);
-  padding: 1rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(100,255,218,0.10);
-  transition: box-shadow 0.4s, background 0.4s;
-  cursor: pointer;
-}
-
