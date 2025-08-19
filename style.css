@@ -469,212 +469,204 @@ header::before {
 }
 
 /* Certifications Section */
-#certifications { scroll-margin-top: 80px; }
-
+#certifications {
+    scroll-margin-top: 80px;
+}
 .certifications-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
 }
-
 .certification-card {
-  background: var(--card-bg);
-  border-radius: 10px;
-  padding: 2rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-  border: 1px solid rgba(100, 255, 218, 0.1);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 }
-
 .certification-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 5px; height: 0;
-  background: var(--accent);
-  transition: height 0.3s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.3s;
 }
-
 .certification-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
-
-.certification-card:hover::before { height: 100%; }
-
+.certification-card:hover::before {
+    height: 100%;
+}
 .certification-icon {
-  font-size: 2.5rem;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
 }
-
 .certification-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
 }
-
 .certification-card .issuer {
-  color: var(--light-text);
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  display: block;
+    color: var(--light-text);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: block;
 }
-
 .certification-card p {
-  color: var(--light-text);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
+    color: var(--light-text);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
 }
 
 /* Projects Section */
 .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
 }
-
 .project-card {
-  background: var(--card-bg);
-  border-radius: 10px;
-  padding: 2rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-  border: 1px solid rgba(100, 255, 218, 0.1);
-  position: relative;
-  overflow: hidden;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    position: relative;
+    overflow: hidden;
 }
-
 .project-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 5px; height: 0;
-  background: var(--accent);
-  transition: height 0.3s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.3s;
 }
-
 .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
-
-.project-card:hover::before { height: 100%; }
-
+.project-card:hover::before {
+    height: 100%;
+}
 .project-icon {
-  font-size: 2.5rem;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
 }
-
-.project-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
-
+.project-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
 .project-card p {
-  color: var(--light-text);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
+    color: var(--light-text);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
 }
-
 .tech-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
-
 .tech-tags span {
-  background: rgba(100, 255, 218, 0.1);
-  color: var(--accent);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+    background: rgba(100, 255, 218, 0.1);
+    color: var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
 }
-
 /* Enhanced Skills Section */
 .skills-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
 }
-
 .skill-category {
-  background: rgba(17, 34, 64, 0.7);
-  border-radius: 10px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(100, 255, 218, 0.1);
-  transition: all 0.3s;
-  overflow: hidden;
-  cursor: pointer;
+    background: rgba(17, 34, 64, 0.7);
+    border-radius: 10px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    transition: all 0.3s;
+    overflow: hidden;
+    cursor: pointer;
 }
-
 .skill-category.active {
-  background: rgba(17, 34, 64, 0.9);
-  border-color: var(--accent);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: rgba(17, 34, 64, 0.9);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
-
 .skill-category h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  font-size: 1.3rem;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    cursor: pointer;
 }
-
 .skill-category h3 i {
-  margin-right: 10px;
-  font-size: 1.2rem;
-  transition: transform 0.3s;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
 }
-
 .skill-category.active h3 i.toggle-icon {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
-
 .skill-list {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-out;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
 }
-
-.skill-category.active .skill-list { max-height: 1000px; }
-
+.skill-category.active .skill-list {
+    max-height: 1000px;
+}
 .skill-item {
-  padding: 0.8rem 0;
-  font-size: 1.1rem;
-  color: var(--light-text);
-  border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  transition: all 0.3s;
+    padding: 0.8rem 0;
+    font-size: 1.1rem;
+    color: var(--light-text);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s;
 }
-
-.skill-item:hover { background: rgba(100, 255, 218, 0.05); }
-
-.skill-name { display: flex; align-items: center; }
-.skill-name::before { content: '▹'; color: var(--accent); margin-right: 10px; }
-
+.skill-item:hover {
+    background: rgba(100, 255, 218, 0.05);
+}
+.skill-name {
+    display: flex;
+    align-items: center;
+}
+.skill-name::before {
+    content: '▹';
+    color: var(--accent);
+    margin-right: 10px;
+}
 .skill-description {
-  max-height: 0;
-  overflow: hidden;
-  padding-left: 26px;
-  color: var(--light-text);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  transition: max-height 0.4s ease-out, padding-top 0.3s;
+    max-height: 0;
+    overflow: hidden;
+    padding-left: 26px;
+    color: var(--light-text);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: max-height 0.4s ease-out, padding-top 0.3s;
 }
-
 .skill-item.active .skill-description {
-  max-height: 200px;
-  padding-top: 10px;
+    max-height: 200px;
+    padding-top: 10px;
 }
-
 /* Contact Section */
 .contact-content {
   display: flex;
