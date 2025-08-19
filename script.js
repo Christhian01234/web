@@ -104,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
             statusEl.textContent = 'Sending...';
 
             const formData = new FormData(contactForm);
-            formData.append('g-recaptcha-response', recaptchaResponse); // Append reCAPTCHA token
 
             try {
                 const response = await fetch(contactForm.action, {
@@ -159,4 +158,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
 
