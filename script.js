@@ -103,8 +103,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const statusEl = document.getElementById('formStatus');
             statusEl.textContent = 'Sending...';
 
+            // Check if reCAPTCHA is completed
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                statusEl.textContent = 'Please complete the reCAPTCHA.';
+                return;
+            }
             const formData = new FormData(contactForm);
-
             try {
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
@@ -158,5 +163,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
 
 
