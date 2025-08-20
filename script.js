@@ -4,16 +4,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const navMenu = document.querySelector('nav ul');
     const navLinks = document.querySelectorAll('nav ul li a');
 
-    // Toggle mobile nav
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        menuToggle.setAttribute('aria-expanded', navMenu.classList.contains('active'));
-    });
+    // Toggle mobile nav (with guard)
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', navMenu.classList.contains('active'));
+        });
+    }
 
     // Close nav on link click (mobile)
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
+            navMenu?.classList.remove('active');
         });
     });
 
@@ -72,67 +74,89 @@ document.addEventListener('DOMContentLoaded', function () {
         const card = document.getElementById(cardId);
         const modal = document.getElementById(modalId);
         const closeBtn = document.getElementById(closeId);
-        if (card && modal && closeBtn) {
-            card.addEventListener('click', () => {
-                modal.style.display = 'block';
-                closeBtn.focus();
-                modal.setAttribute('aria-modal', 'true');
-                modal.setAttribute('role', 'dialog');
-            });
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-            window.addEventListener('click', function (event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        }
+
+        if (!(card && modal && closeBtn)) return;
+
+        const open = () => {
+            modal.style.display = 'block';
+            modal.setAttribute('aria-modal', 'true');
+            modal.setAttribute('role', 'dialog');
+            closeBtn.focus();
+            document.addEventListener('keydown', onEsc);
+        };
+
+        const close = () => {
+            modal.style.display = 'none';
+            document.removeEventListener('keydown', onEsc);
+        };
+
+        const onEsc = (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') close();
+        };
+
+        card.addEventListener('click', open);
+        closeBtn.addEventListener('click', close);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) close();
+        });
     }
     setupModal('java-cert-card', 'javaModal', 'closeJavaModal');
     setupModal('cisco-cert-card', 'ciscoModal', 'closeCiscoModal');
     setupModal('csih-cert-card', 'csihModal', 'closeCsihModal');
     setupModal('ai-cert-card', 'aiModal', 'closeAiModal');
 
-
-    // Contact Form AJAX (Formspree)
+    // Contact Form AJAX (Formspree + reCAPTCHA)
     const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const statusEl = document.getElementById('formStatus');
-        statusEl.textContent = 'Sending...';
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusEl = document.getElementById('formStatus');
+            statusEl.textContent = 'Sending...';
 
-        // ✅ Check reCAPTCHA
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (!recaptchaResponse) {
-            statusEl.textContent = 'Please complete the reCAPTCHA.';
-            return;
-        }
-
-        const formData = new FormData(contactForm);
-        formData.append('g-recaptcha-response', recaptchaResponse);
-
-        try {
-            const response = await fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-
-            if (response.ok) {
-                statusEl.textContent = 'Thanks! Your message was sent.';
-                contactForm.reset();
-                grecaptcha.reset(); // ✅ Reset reCAPTCHA after success
-            } else {
-                statusEl.textContent = 'Oops! There was a problem sending your message.';
+            // Check reCAPTCHA availability
+            if (!(window.grecaptcha && typeof grecaptcha.getResponse === 'function')) {
+                statusEl.textContent = 'reCAPTCHA failed to load. Please refresh and try again.';
+                return;
             }
-        } catch (err) {
-            statusEl.textContent = 'Network error. Please try again.';
-            console.error('Form submission error:', err);
-        }
-    });
-}
+
+            // Check reCAPTCHA completion
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                statusEl.textContent = 'Please complete the reCAPTCHA.';
+                return;
+            }
+
+            const formData = new FormData(contactForm);
+            formData.append('g-recaptcha-response', recaptchaResponse);
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    statusEl.textContent = 'Thanks! Your message was sent.';
+                    contactForm.reset();
+                    grecaptcha.reset();
+                } else {
+                    let msg = 'Oops! There was a problem sending your message.';
+                    try {
+                        const data = await response.json();
+                        if (data?.errors?.length) {
+                            msg = data.errors.map(e => e.message).join(' ');
+                        }
+                    } catch {}
+                    statusEl.textContent = msg;
+                    console.warn('Formspree error status:', response.status);
+                }
+            } catch (err) {
+                console.error('Form submission error:', err);
+                statusEl.textContent = 'Network error. Please try again.';
+            }
+        });
+    }
 
     // Experience Image Zoom/Fullscreen
     const experienceImage = document.querySelector('.experience-image');
@@ -167,4 +191,3 @@ if (contactForm) {
         });
     }
 });
-
