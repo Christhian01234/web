@@ -420,11 +420,10 @@ header::before {
 }
 
 .timeline-date {
-  position: absolute;
-  left: -150px;
+  left: 45%;
   top: 0;
   width: 120px;
-  text-align: right;
+  text-align: left;
   color: var(--accent);
   font-weight: bold;
 }
@@ -882,7 +881,7 @@ footer p {
     .projects-grid,
     .certifications-grid,
     .skills-container {
-        grid-template-columns: 1fr; !important;
+        grid-template-columns: 1fr; /*important;*/
         overflow-x: hidden;
     }
     nav .container {
