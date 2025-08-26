@@ -106,15 +106,24 @@ document.addEventListener('DOMContentLoaded', function () {
     setupModal('ai-cert-card', 'aiModal', 'closeAiModal');
 
     // Contact email js
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const statusEl = document.getElementById('formStatus');
   statusEl.textContent = 'Sending...';
 
+  // ✅ Check reCAPTCHA
+  const recaptchaResponse = grecaptcha.getResponse();
+  if (!recaptchaResponse) {
+    statusEl.textContent = 'Please complete the reCAPTCHA.';
+    return;
+  }
+
+  // ✅ Send via EmailJS
   emailjs.sendForm('service_3i0lwzn', 'template_vef3awi', this)
     .then(() => {
       statusEl.textContent = 'Thanks! Your message was sent.';
       this.reset();
+      grecaptcha.reset(); // Reset reCAPTCHA after success
     }, (err) => {
       console.error('EmailJS error:', err);
       statusEl.textContent = 'Oops! Something went wrong.';
