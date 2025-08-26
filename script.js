@@ -105,59 +105,21 @@ document.addEventListener('DOMContentLoaded', function () {
     setupModal('csih-cert-card', 'csihModal', 'closeCsihModal');
     setupModal('ai-cert-card', 'aiModal', 'closeAiModal');
 
-    // Contact Form AJAX (Formspree + reCAPTCHA)
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const statusEl = document.getElementById('formStatus');
-            statusEl.textContent = 'Sending...';
+    // Contact email js
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const statusEl = document.getElementById('formStatus');
+  statusEl.textContent = 'Sending...';
 
-            // Check reCAPTCHA availability
-            if (!(window.grecaptcha && typeof grecaptcha.getResponse === 'function')) {
-                statusEl.textContent = 'reCAPTCHA failed to load. Please refresh and try again.';
-                return;
-            }
-
-            // Check reCAPTCHA completion
-            const recaptchaResponse = grecaptcha.getResponse();
-            if (!recaptchaResponse) {
-                statusEl.textContent = 'Please complete the reCAPTCHA.';
-                return;
-            }
-
-            const formData = new FormData(contactForm);
-            formData.append('g-recaptcha-response', recaptchaResponse);
-
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    statusEl.textContent = 'Thanks! Your message was sent.';
-                    contactForm.reset();
-                    grecaptcha.reset();
-                } else {
-                    let msg = 'Oops! There was a problem sending your message.';
-                    try {
-                        const data = await response.json();
-                        if (data?.errors?.length) {
-                            msg = data.errors.map(e => e.message).join(' ');
-                        }
-                    } catch {}
-                    statusEl.textContent = msg;
-                    console.warn('Formspree error status:', response.status);
-                }
-            } catch (err) {
-                console.error('Form submission error:', err);
-                statusEl.textContent = 'Network error. Please try again.';
-            }
-        });
-    }
-
+  emailjs.sendForm('service_3i0lwzn', 'template_vef3awi', this)
+    .then(() => {
+      statusEl.textContent = 'Thanks! Your message was sent.';
+      this.reset();
+    }, (err) => {
+      console.error('EmailJS error:', err);
+      statusEl.textContent = 'Oops! Something went wrong.';
+    });
+});
     // Experience Image Zoom/Fullscreen
     const experienceImage = document.querySelector('.experience-image');
     const imageOverlay = document.getElementById('imageOverlay');
