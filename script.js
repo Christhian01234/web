@@ -127,6 +127,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     }, (err) => {
       console.error('EmailJS error:', err);
       statusEl.textContent = 'Oops! Something went wrong.';
+      grecapcha.reset(); // Reset reCAPTCHA after failure
     });
 });
     // Experience Image Zoom/Fullscreen
